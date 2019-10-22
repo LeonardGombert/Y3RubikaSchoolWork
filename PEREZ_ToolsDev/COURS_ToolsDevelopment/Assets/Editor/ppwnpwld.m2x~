@@ -1,0 +1,19 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEditor;
+
+public class SearchBarInEditor : EditorWindow
+{
+    [MenuItem("Window/SearchBar")]
+
+    public static void ShowWindow()
+    {
+        EditorWindow.GetWindow(typeof(MySearchBar));
+    }
+
+    void OnGUI()
+    {
+        // The actual window code goes here
+    }
+}
