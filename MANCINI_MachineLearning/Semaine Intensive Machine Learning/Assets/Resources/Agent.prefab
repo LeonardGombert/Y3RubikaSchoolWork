@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 376940692449245808}
   - component: {fileID: 376940692450572880}
   - component: {fileID: 376940692451539088}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: backLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 376940692449245810}
   - component: {fileID: 376940692450572882}
   - component: {fileID: 376940692451539090}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: backRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -169,13 +169,13 @@ GameObject:
   - component: {fileID: 376940692449273386}
   - component: {fileID: 376940692449273387}
   - component: {fileID: 376940692449273384}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Agent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &376940692449245812
 Transform:
   m_ObjectHideFlags: 0
@@ -287,7 +287,7 @@ GameObject:
   - component: {fileID: 376940692449245814}
   - component: {fileID: 376940692450572884}
   - component: {fileID: 376940692451539092}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: frontLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -365,7 +365,7 @@ GameObject:
   - component: {fileID: 376940692449245816}
   - component: {fileID: 376940692450572886}
   - component: {fileID: 376940692451539094}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: frontRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -443,7 +443,7 @@ GameObject:
   - component: {fileID: 376940692449245818}
   - component: {fileID: 376940692450572888}
   - component: {fileID: 376940692451539096}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: JEEP_BODY
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -521,7 +521,7 @@ GameObject:
   - component: {fileID: 376940692449245820}
   - component: {fileID: 376940692450572890}
   - component: {fileID: 376940692451539098}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: side_object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -597,7 +597,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 376940693277375529}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: CarMesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -634,7 +634,7 @@ GameObject:
   m_Component:
   - component: {fileID: 376940693420017894}
   - component: {fileID: 376940693420017895}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: backRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -694,7 +694,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 376940693642946598}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WheelColliders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -729,7 +729,7 @@ GameObject:
   m_Component:
   - component: {fileID: 376940693709178854}
   - component: {fileID: 376940693709178855}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: frontLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -790,7 +790,7 @@ GameObject:
   m_Component:
   - component: {fileID: 376940694355231150}
   - component: {fileID: 376940694355231151}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: backLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -851,7 +851,7 @@ GameObject:
   m_Component:
   - component: {fileID: 376940694412012691}
   - component: {fileID: 376940694412012688}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: frontRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -48,7 +48,8 @@ public class NeuralNetwork
     {
         List<float[][]> axonsList = new List<float[][]>();
 
-        for (x = 0; x < layers.Length; x++)
+        //commencer à 1 parce qu'on a une colonne d'axones de moins que de neurones
+        for (x = 1; x < layers.Length; x++)
         {
             List<float[]> axonsPerLayerList = new List<float[]>();
 
@@ -75,7 +76,7 @@ public class NeuralNetwork
     //Fonction pour copier les network dans les agents moins performants
     public void CopyNet(NeuralNetwork net)
     {
-        for (x = 0; x < net.axons.Length; x++)
+        for (x = 1; x < net.axons.Length; x++)
         {
             for (y = 0; y < net.axons[x].Length; y++)
             {
@@ -89,10 +90,12 @@ public class NeuralNetwork
 
     float value;
 
+    //valeur du neurones * axone = neurone du layer suivant
     public void FeedForward(float[] inputs)
     {
         neurons[0] = inputs; // Premier Layer de Neurones, les Inputs
 
+        //x = 1 parce qu'on commence au deuxieme layer (premier hidden layer) 
         for (x = 1; x < layers.Length; x++)
         {
             for (y = 0; y < layers[x]; y++)
@@ -104,6 +107,7 @@ public class NeuralNetwork
                     value += neurons[x - 1][z] * axons[x - 1][y][z];
                 }
 
+                //tangente hyperbolique, pour que le résultat soit compris entre -1 et 1
                 neurons[x][y] = (float)Math.Tanh(value);
             }
         }
@@ -113,6 +117,7 @@ public class NeuralNetwork
 
     public void Mutate(float mutationProb)
     {
+        //change la valeur multiplicative de tout les axones
         for (x = 0; x < axons.Length; x++)
         {
             for (y = 0; y < axons[x].Length; y++)
