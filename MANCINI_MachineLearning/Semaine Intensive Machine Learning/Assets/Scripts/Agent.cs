@@ -66,7 +66,7 @@ namespace Leonard
                 return 1;
             }
 
-            else if (fitness > other.fitness)
+            if (fitness > other.fitness)
             {
                 return -1;
             }
@@ -95,7 +95,6 @@ namespace Leonard
             OutputUpdate();
             UpdateFitness();
         }
-
 
         private void InputUpdate()
         {

@@ -42,8 +42,8 @@ namespace Leonard
 
         IEnumerator LoopCoroutine()
         {
-            /*if(keptAgents.text == null) numberOfAgentsToKeep = 50;
-            else numberOfAgentsToKeep = float.Parse(keptAgents.text);    */
+            if(keptAgents.text == null) numberOfAgentsToKeep = 50;
+            else numberOfAgentsToKeep = float.Parse(keptAgents.text);
             _numberOfAgentsToKeepRate = numberOfAgentsToKeep / populationSize;
             NewGeneration();
             Focus();
@@ -103,10 +103,10 @@ namespace Leonard
         private void Mutate()
         {
             //for each agent in the bottom half (agents.Count/2)...
-            for (int g = agents.Count / 2; g < agents.Count; g++)
+            for (int g = (int)(agents.Count * _numberOfAgentsToKeepRate); g < agents.Count; g++)
             {
                 //...copy the axon/Neural Network of the corresponding agent in the first half (51st copies 1st, 52nd copies 2nd...)
-                agents[g].net.CopyNet(agents[g - (agents.Count / 2)].net);
+                agents[g].net.CopyNet(agents[g - (int)(agents.Count * _numberOfAgentsToKeepRate)].net);
                 agents[g].net.Mutate(mutationRate);
                 agents[g].SetMutatedColor();
             }
@@ -123,7 +123,7 @@ namespace Leonard
         private void SetColor()
         {
             //start the for loop at the second element (agents[1])
-            for (int s = 1; s < agents.Count / 2; s++)
+            for (int s = 1; s < (int)(agents.Count * _numberOfAgentsToKeepRate); s++)
             {
                 agents[s].SetDefaultColor();
             }
