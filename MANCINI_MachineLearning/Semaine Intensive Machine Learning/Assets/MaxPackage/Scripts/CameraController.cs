@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Leonard;
+using Maxence;
 
-namespace Leonard
+namespace Maxence
 {
     public class CameraController : MonoBehaviour
     {
@@ -20,21 +19,11 @@ namespace Leonard
         public float posLerpSpeed = 0.02f;
         public float lookLerpSpeed = 0.1f;
 
-        // Start is called before the first frame update
         void Awake()
         {
             Init();
         }
 
-        public virtual void Init()
-        {
-            if (instance != null)
-                Destroy(instance);
-
-            else instance = this;
-        }
-
-        // Update is called once per frame
         void FixedUpdate()
         {
             wantedPos = target.TransformPoint(cameraLocalPosition);
@@ -42,9 +31,13 @@ namespace Leonard
 
             transform.position = Vector3.Lerp(transform.position, wantedPos, posLerpSpeed);
 
-            Quaternion lookOnLook = Quaternion.LookRotation(target.TransformPoint(localTargetLookAtPosition) - transform.position);
+            Quaternion lookRotation = Quaternion.LookRotation(target.TransformPoint(localTargetLookAtPosition) - transform.position);
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, lookLerpSpeed);
+        }
 
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookOnLook, lookLerpSpeed);
+        public virtual void Init()
+        {
+            instance = this;
         }
     }
 }

@@ -1,20 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Leonard;
 
-public class Checkpoint : MonoBehaviour
+namespace Leonard
 {
-    public Transform nextCheckpoint;
-
-    private void OnTriggerEnter(Collider other)
+    public class Checkpoint : MonoBehaviour
     {
-        if(other.name == "Agent")
+        public Transform nextCheckpoint;
+
+        private void OnTriggerEnter(Collider other)
         {
             Agent touchedAgent = other.GetComponent<Agent>();
 
-            if (touchedAgent.nextCheckpoint == transform)
+            if (touchedAgent)
             {
-                touchedAgent.CheckpointReached(nextCheckpoint);
+                if (touchedAgent.nextCheckpoint == transform)
+                {
+                    touchedAgent.CheckpointReached(nextCheckpoint);
+                }
             }
         }
     }

@@ -2,71 +2,76 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Leonard;
 
-public class CarController : MonoBehaviour
+namespace Leonard
 {
-    public float maxSteerAngle = 42;
-    public float motorForce = 800;
-    float steeringAngle;
-
-    public WheelCollider frontRight, frontLeft, backRight, backLeft;
-    public Transform frontRightT, frontLeftT, backRightT, backLeftT;
-
-    //Do not directly include player inputs, as this class is used both by the player and the algorithm
-    public float horizontalInput;
-    public float verticalInput;
-
-    Vector3 wheelPos;
-    Quaternion wheelQuat;
-
-    public Rigidbody rb;
-
-    private void Start()
+    public class CarController : MonoBehaviour
     {
-        rb.centerOfMass = new Vector3(0, -5, 0);
-    }
+        public float maxSteerAngle = 42;
+        public float motorForce = 800;
+        float steeringAngle;
 
-    void FixedUpdate()
-    {
-        Steer();
-        Accelerate();
-        WheelVisuals();
-    }
+        public WheelCollider frontRight, frontLeft, backRight, backLeft;
+        public Transform frontRightT, frontLeftT, backRightT, backLeftT;
 
-    void Steer()
-    {
-        steeringAngle = horizontalInput * maxSteerAngle;
+        //Do not directly include player inputs, as this class is used both by the player and the algorithm
+        public float horizontalInput;
+        public float verticalInput;
 
-        //apply steeringAngle to the wheel collider components
-        frontRight.steerAngle = steeringAngle;
-        frontLeft.steerAngle = steeringAngle;
-    }
+        Vector3 wheelPos;
+        Quaternion wheelQuat;
 
-    void Accelerate()
-    {
-        //apply input value as acceleration
-        backRight.motorTorque = verticalInput * motorForce;
-        backLeft.motorTorque = verticalInput * motorForce;
-    }
+        public Rigidbody rb;
+        public Vector3 centerOfMassPos = new Vector3(0.00923f, 0.02833f, -0.06784f);
 
-    void WheelVisuals()
-    {
-        UpdateWheelPos(frontRight, frontRightT);
-        UpdateWheelPos(frontLeft, frontLeftT);
-        UpdateWheelPos(backRight, backRightT);
-        UpdateWheelPos(backLeft, backLeftT);
-    }
+        private void Start()
+        {
+            rb.centerOfMass = centerOfMassPos;
+        }
 
-    private void UpdateWheelPos(WheelCollider wheelCollider, Transform tr)
-    {
-        wheelPos = tr.position;
-        wheelQuat = tr.rotation;
+        void FixedUpdate()
+        {
+            Steer();
+            Accelerate();
+            WheelVisuals();
+        }
 
-        //using the "out" function retroactively updates the values of pos and quat
-        wheelCollider.GetWorldPose(out wheelPos, out wheelQuat);
+        void Steer()
+        {
+            steeringAngle = horizontalInput * maxSteerAngle;
 
-        //assign
-        tr.position = wheelPos;
-        tr.rotation = wheelQuat;
+            //apply steeringAngle to the wheel collider components
+            frontRight.steerAngle = steeringAngle;
+            frontLeft.steerAngle = steeringAngle;
+        }
+
+        void Accelerate()
+        {
+            //apply input value as acceleration
+            backRight.motorTorque = verticalInput * motorForce;
+            backLeft.motorTorque = verticalInput * motorForce;
+        }
+
+        void WheelVisuals()
+        {
+            UpdateWheelPos(frontRight, frontRightT);
+            UpdateWheelPos(frontLeft, frontLeftT);
+            UpdateWheelPos(backRight, backRightT);
+            UpdateWheelPos(backLeft, backLeftT);
+        }
+
+        private void UpdateWheelPos(WheelCollider wheelCollider, Transform tr)
+        {
+            wheelPos = tr.position;
+            wheelQuat = tr.rotation;
+
+            //using the "out" function retroactively updates the values of pos and quat
+            wheelCollider.GetWorldPose(out wheelPos, out wheelQuat);
+
+            //assign
+            tr.position = wheelPos;
+            tr.rotation = wheelQuat;
+        }
     }
 }

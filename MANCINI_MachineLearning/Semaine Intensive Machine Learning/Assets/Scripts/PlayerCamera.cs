@@ -1,11 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Leonard;
 
-public class PlayerCamera : CameraController
+namespace Leonard
 {
-    public override void Init()
+    public class PlayerCamera : CameraController
     {
+        public override void Init()
+        {
 
+        }
     }
 }

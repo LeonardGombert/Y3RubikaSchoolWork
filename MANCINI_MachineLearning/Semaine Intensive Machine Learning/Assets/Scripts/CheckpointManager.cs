@@ -1,38 +1,43 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Leonard;
 
-public class CheckpointManager : MonoBehaviour
+namespace Leonard
 {
-    public static CheckpointManager instance;
-
-    public Transform firstCheckPoint;
-
-    // Start is called before the first frame update
-    void Awake()
+    public class CheckpointManager : MonoBehaviour
     {
-        if (instance != null)
-            Destroy(instance);
+        public static CheckpointManager instance;
 
-        else instance = this;
-    }
+        public Transform firstCheckPoint;
 
-    [ContextMenu("Init Checkpoint")]
-    public void Init()
-    {
-        firstCheckPoint = transform.GetChild(0);
-
-        for (int i = 0; i < transform.childCount - 1; i++)
+        // Start is called before the first frame update
+        void Awake()
         {
-            transform.GetChild(i).GetComponent<Checkpoint>().nextCheckpoint = transform.GetChild(i+1);
+            if (instance != null)
+                Destroy(instance);
+
+            else instance = this;
+            Init();
         }
 
-        transform.GetChild(transform.childCount - 1).GetComponent<Checkpoint>().nextCheckpoint = transform.GetChild(0);
-    }
+        [ContextMenu("Init Checkpoint")]
+        public void Init()
+        {
+            firstCheckPoint = transform.GetChild(0);
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+            for (int i = 0; i < transform.childCount - 1; i++)
+            {
+                transform.GetChild(i).GetComponent<Checkpoint>().nextCheckpoint = transform.GetChild(i + 1);
+            }
+
+            transform.GetChild(transform.childCount - 1).GetComponent<Checkpoint>().nextCheckpoint = transform.GetChild(0);
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+
+        }
     }
 }

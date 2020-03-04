@@ -1,6 +1,10 @@
 ﻿using System.Collections.Generic;
+using Leonard;
 
-public class Data
+namespace Leonard
 {
-    public List<NeuralNetwork> neuralNetworks;
+    public class Data
+    {
+        public List<NeuralNetwork> neuralNetworks;
+    }
 }
