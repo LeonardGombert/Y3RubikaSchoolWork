@@ -850,10 +850,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   net:
-    layers: 07000000070000000700000002000000
+    layers: 08000000070000000700000002000000
   fitness: 0
   nextCheckpoint: {fileID: 0}
-  nextCheckpointDist: 0
+  totalDistToCheckpoint: 0
   distanceTraveled: 0
   render: {fileID: 515387321412534882}
   defaultMat: {fileID: 2100000, guid: bd94a79b00b08e94495e904db87cf391, type: 2}

@@ -13,7 +13,7 @@ namespace Leonard
         public float fitness;
 
         public Transform nextCheckpoint;
-        public float nextCheckpointDist;
+        public float totalDistToCheckpoint;
         //distance since last checkpoint (different from fitness)
         public float distanceTraveled;
 
@@ -39,9 +39,9 @@ namespace Leonard
 
         public void CheckpointReached(Transform newNextCheckpoint)
         {
-            distanceTraveled += nextCheckpointDist;
+            distanceTraveled += totalDistToCheckpoint;
             nextCheckpoint = newNextCheckpoint;
-            nextCheckpointDist = (transform.position - nextCheckpoint.position).magnitude;
+            totalDistToCheckpoint = (transform.position - nextCheckpoint.position).magnitude;
         }
 
         public void SetDefaultColor()
@@ -57,6 +57,7 @@ namespace Leonard
         public void SetFirstColor()
         {
             render.material = firstMat;
+            gameObject.name = "YES";
         }
 
         public int CompareTo(Agent other)
@@ -84,7 +85,7 @@ namespace Leonard
             distanceTraveled = 0;
 
             nextCheckpoint = CheckpointManager.instance.firstCheckPoint;
-            nextCheckpointDist = (tr.position - nextCheckpoint.position).magnitude;
+            totalDistToCheckpoint = (tr.position - nextCheckpoint.position).magnitude;
 
             inputs = new float[net.layers[0]];
         }
@@ -108,6 +109,15 @@ namespace Leonard
             //horizontal and vertical inputs
             inputs[5] = 1 - (float)Math.Tanh(rb.velocity.magnitude / 20);
             inputs[6] = (float)Math.Tanh(rb.angularVelocity.y * 0.01f);
+
+            if (gameObject.name == "YES")
+            {
+                float actualDistToCheckpoint = (nextCheckpoint.position - transform.position).magnitude;
+                //Debug.Log(totalDistToCheckpoint);
+                Debug.Log(actualDistToCheckpoint);
+                //inputs[7] = 1 - actualDistToCheckpoint/totalDistToCheckpoint;//the greater the actualDist, the greater the tanhvalue 
+                Debug.Log(inputs[7]);
+            }
         }
         private void OutputUpdate()
         {
@@ -123,7 +133,7 @@ namespace Leonard
         {
             SetFitness(
                 distanceTraveled + //total travelled distance
-                (nextCheckpointDist - //fixed value, calculated once when you hit a new checkpoint
+                (totalDistToCheckpoint - //fixed value, calculated once when you hit a new checkpoint
                 (transform.position - nextCheckpoint.position).magnitude)); //incremental value, calculated as you move to next checkpoint
         }
 

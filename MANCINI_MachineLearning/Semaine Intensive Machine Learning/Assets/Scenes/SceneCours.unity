@@ -1061,7 +1061,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 3.287e-42, y: 1.02e-43, z: NaN, w: 0}
+  m_BoundingSphereOverride: {x: -1.595e-42, y: 1.7e-44, z: 1.1e-44, w: 1e-45}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -2726,15 +2726,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 191ca7ca1aab2f544961dd54c46269ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  populationSize: 125
-  trainingDuration: 30
-  mutationRate: 1
+  populationSize: 3
+  trainingDuration: 5000
+  mutationRate: 30
   agentPrefab: {fileID: 515387321414737106, guid: 21ded5cf19cb86f4a88380f01be9c320,
     type: 3}
   agentGroup: {fileID: 1226127184}
   agents: []
   keptAgents: {fileID: 584229752}
-  _numberOfAgentsToKeepRate: 0
+  _keptAgentsMultiplier: 0
+  dontMutate: 0
 --- !u!4 &1810096158
 Transform:
   m_ObjectHideFlags: 0

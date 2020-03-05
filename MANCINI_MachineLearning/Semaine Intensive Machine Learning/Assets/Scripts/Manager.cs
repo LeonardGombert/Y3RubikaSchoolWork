@@ -22,7 +22,9 @@ namespace Leonard
         public InputField keptAgents;
 
         float numberOfAgentsToKeep = 1;
-        public float _numberOfAgentsToKeepRate;
+        public float _keptAgentsMultiplier;
+
+        public bool dontMutate;
 
         // Start is called before the first frame update
         void Start()
@@ -32,7 +34,7 @@ namespace Leonard
 
         IEnumerator InitCoroutine()
         {
-            _numberOfAgentsToKeepRate = numberOfAgentsToKeep / populationSize;
+            _keptAgentsMultiplier = numberOfAgentsToKeep / populationSize;
             NewGeneration();
             //InitNeuralNetworkViewer();
             Focus();
@@ -44,7 +46,7 @@ namespace Leonard
         {
             if(keptAgents.text == null) numberOfAgentsToKeep = 50;
             else numberOfAgentsToKeep = float.Parse(keptAgents.text);
-            _numberOfAgentsToKeepRate = numberOfAgentsToKeep / populationSize;
+            _keptAgentsMultiplier = numberOfAgentsToKeep / populationSize;
             NewGeneration();
             Focus();
             yield return new WaitForSeconds(trainingDuration);
@@ -102,13 +104,50 @@ namespace Leonard
         //Mutate the bottom half of the list (50 "worst" performing agents)
         private void Mutate()
         {
-            //for each agent in the bottom half (agents.Count/2)...
-            for (int g = (int)(agents.Count * _numberOfAgentsToKeepRate); g < agents.Count; g++)
+
+            if(dontMutate)
             {
-                //...copy the axon/Neural Network of the corresponding agent in the first half (51st copies 1st, 52nd copies 2nd...)
-                agents[g].net.CopyNet(agents[g - (int)(agents.Count * _numberOfAgentsToKeepRate)].net);
-                agents[g].net.Mutate(mutationRate);
-                agents[g].SetMutatedColor();
+                int substractionValue = (int)(agents.Count * _keptAgentsMultiplier)/*10*/;
+
+                //for each agent in the bottom half (agents.Count/2)...
+                for (int g = (int)(agents.Count * _keptAgentsMultiplier)/*10*/; g < agents.Count; g++)
+                {
+                    //...copy the axon/Neural Network of the corresponding agent in the first half (51st copies 1st, 52nd copies 2nd...)
+                    /*10-10 = copy 0 
+                     * 11-10 = copy 1
+                     * 12-10 = copy 2
+                     * ...
+                     * 
+                     * 20-10 = copy 10
+                     * 21-20 = copy 11 (?)
+                     * 31-30
+                     */
+
+                    //bring to decimal value
+                    //floor to lowest int value
+                    //times 10
+
+                    if (g < 21) substractionValue = Mathf.FloorToInt(g / substractionValue);
+                    else if (g > 21 && g < 101) substractionValue = Mathf.FloorToInt(g / 10);
+
+
+                    agents[g].net.CopyNet(agents[g - substractionValue * 10].net);
+                    //agents[g].net.Mutate(mutationRate);
+                    agents[g].SetMutatedColor();
+                }
+            }
+
+            else
+            {
+                //for each agent in the bottom half (agents.Count/2)...STARTS COUNTING FROM 50
+                for (int g = agents.Count / 2; g < agents.Count; g++)
+                {
+                    //...copy the axon/Neural Network of the corresponding agent in the first half (51st copies 1st, 52nd copies 2nd...)
+                    //STARTS COPYING AT 50-50 = 0, 51-50 = 1, 52-50 = 2...
+                    agents[g].net.CopyNet(agents[g - agents.Count / 2].net);
+                    agents[g].net.Mutate(mutationRate);
+                    agents[g].SetMutatedColor();
+                }
             }
         }
 
@@ -123,7 +162,7 @@ namespace Leonard
         private void SetColor()
         {
             //start the for loop at the second element (agents[1])
-            for (int s = 1; s < (int)(agents.Count * _numberOfAgentsToKeepRate); s++)
+            for (int s = 1; s < (int)(agents.Count * _keptAgentsMultiplier); s++)
             {
                 agents[s].SetDefaultColor();
             }

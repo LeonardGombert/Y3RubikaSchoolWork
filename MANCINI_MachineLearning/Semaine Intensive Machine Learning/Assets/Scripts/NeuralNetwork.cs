@@ -9,16 +9,17 @@ namespace Leonard
     [Serializable]
     public class NeuralNetwork
     {
-        //1 input layer of 7 inputs, 2 hidden layers of 7 inputs, and one output layer with 2 inputs
-        public int[] layers = new[] { 7, 7, 7, 2 };
+        public int[] layers;
         public float[][] neurons;
         public float[][][] axons;
 
-        int x, y, z;
+        int x;
+        int y;
+        int z;
 
         public NeuralNetwork()
         {
-
+            // For Serialization Debug
         }
 
         public NeuralNetwork(int[] _layers)
@@ -51,7 +52,6 @@ namespace Leonard
         {
             List<float[][]> axonsList = new List<float[][]>();
 
-            //commencer à 1 parce qu'on a une colonne d'axones de moins que de neurones
             for (x = 1; x < layers.Length; x++)
             {
                 List<float[]> axonsPerLayerList = new List<float[]>();
@@ -76,10 +76,9 @@ namespace Leonard
             axons = axonsList.ToArray();
         }
 
-        //Fonction pour copier les network dans les agents moins performants
         public void CopyNet(NeuralNetwork net)
         {
-            for (x = 1; x < net.axons.Length; x++)
+            for (x = 0; x < net.axons.Length; x++)
             {
                 for (y = 0; y < net.axons[x].Length; y++)
                 {
@@ -93,12 +92,10 @@ namespace Leonard
 
         float value;
 
-        //valeur du neurones * axone = neurone du layer suivant
         public void FeedForward(float[] inputs)
         {
             neurons[0] = inputs; // Premier Layer de Neurones, les Inputs
 
-            //x = 1 parce qu'on commence au deuxieme layer (premier hidden layer) 
             for (x = 1; x < layers.Length; x++)
             {
                 for (y = 0; y < layers[x]; y++)
@@ -110,7 +107,6 @@ namespace Leonard
                         value += neurons[x - 1][z] * axons[x - 1][y][z];
                     }
 
-                    //tangente hyperbolique, pour que le résultat soit compris entre -1 et 1
                     neurons[x][y] = (float)Math.Tanh(value);
                 }
             }
@@ -120,7 +116,6 @@ namespace Leonard
 
         public void Mutate(float mutationProb)
         {
-            //change la valeur multiplicative de tout les axones
             for (x = 0; x < axons.Length; x++)
             {
                 for (y = 0; y < axons[x].Length; y++)
